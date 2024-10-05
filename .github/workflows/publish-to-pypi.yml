@@ -33,20 +33,20 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-        const webhookUrl = "${{ env.WECOM_WEBHOOK_URL }}";
-        const messageContent = "${{ github.repository }}" + "发布成功！";
-        const message = {
-          msgtype: "text",
-          text: {
-            content: messageContent
-          }
-        };
-        await github.request("POST " + webhookUrl, {
-          data: message,
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
+          const webhookUrl = "${{ env.WECOM_WEBHOOK_URL }}";
+          const messageContent = "${{ github.repository }}" + "发布成功！";
+          const message = {
+            msgtype: "text",
+            text: {
+              content: messageContent
+            }
+          };
+          await github.request("POST " + webhookUrl, {
+            data: message,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
     - name: Notify failure
       if: failure()
       uses: actions/github-script@v6
