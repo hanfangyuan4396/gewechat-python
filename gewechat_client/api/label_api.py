@@ -1,4 +1,4 @@
-from util.http_util import post_json
+from gewechat_client.util.http_util import post_json
 
 class LabelApi:
     def __init__(self, base_url, token):

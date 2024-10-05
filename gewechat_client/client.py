@@ -1,22 +1,23 @@
-from api.contact_api import ContactApi
-from api.download_api import DownloadApi
-from api.favor_api import FavorApi
-from api.group_api import GroupApi
-from api.label_api import LabelApi
-from api.login_api import LoginApi
-from api.message_api import MessageApi
-from api.personal_api import PersonalApi
+from gewechat_client.api.contact_api import ContactApi
+from gewechat_client.api.download_api import DownloadApi
+from gewechat_client.api.download_api import DownloadApi
+from gewechat_client.api.favor_api import FavorApi
+from gewechat_client.api.group_api import GroupApi
+from gewechat_client.api.label_api import LabelApi
+from gewechat_client.api.login_api import LoginApi
+from gewechat_client.api.message_api import MessageApi
+from gewechat_client.api.personal_api import PersonalApi
 
 
-class GeWeChatClient:
+class GewechatClient:
     """
-    GeWeChatClient 是一个用于与GeWeChat服务进行交互的客户端类。
+    GewechatClient 是一个用于与GeWeChat服务进行交互的客户端类。
     它提供了多种方法来执行各种微信相关的操作，如管理联系人、群组、消息等。
 
     使用示例:
     ```
     # 初始化客户端
-    client = GeWeChatClient("http://服务ip:2531/v2/api", "http://服务ip:2532/download", "your_token_here")
+    client = GewechatClient("http://服务ip:2531/v2/api", "http://服务ip:2532/download", "your_token_here")
     app_id = "your_app_id"
     # 获取联系人列表
     contacts = client.fetch_contacts_list(app_id)

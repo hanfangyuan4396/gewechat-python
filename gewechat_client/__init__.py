@@ -1,0 +1,1 @@
+from gewechat_client.client import GewechatClient
