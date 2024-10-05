@@ -1,4 +1,4 @@
-from util.http_util import post_json
+from gewechat_client.util.http_util import post_json
 
 class FavorApi:
     def __init__(self, base_url, token):
