@@ -1,1 +1,1 @@
-from gewechat_client.client import GeWeChatClient
+from gewechat_client.client import GewechatClient

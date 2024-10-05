@@ -1,4 +1,4 @@
-from gewechat_client import GeWeChatClient
+from gewechat_client import GewechatClient
 import os
 
 def main():
@@ -8,8 +8,8 @@ def main():
     token = os.environ.get("GEWECHAT_TOKE", "xxx")
     app_id = os.environ.get("APP_ID", "xxx")
 
-    # 创建 GeWeChatClient 实例
-    client = GeWeChatClient(base_url, download_url, token)
+    # 创建 GewechatClient 实例
+    client = GewechatClient(base_url, download_url, token)
 
     try:
         contacts_list = client.fetch_contacts_list(app_id)
