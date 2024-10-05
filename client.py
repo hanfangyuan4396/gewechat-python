@@ -16,7 +16,7 @@ class GeWeChatClient:
     使用示例:
     ```
     # 初始化客户端
-    client = GeWeChatClient("https://api.example.com", "your_token_here")
+    client = GeWeChatClient("http://服务ip:2531/v2/api", "http://服务ip:2532/download", "your_token_here")
     app_id = "your_app_id"
     # 获取联系人列表
     contacts = client.fetch_contacts_list(app_id)
@@ -30,9 +30,9 @@ class GeWeChatClient:
 
     注意: 在使用任何方法之前，请确保你已经正确初始化了客户端，并且有有效的 base_url 和 token。
     """
-    def __init__(self, base_url, token):
+    def __init__(self, base_url, download_url, token):
         self._contact_api = ContactApi(base_url, token)
-        self._download_api = DownloadApi(base_url, token)
+        self._download_api = DownloadApi(download_url, token)
         self._favor_api = FavorApi(base_url, token)
         self._group_api = GroupApi(base_url, token)
         self._label_api = LabelApi(base_url, token)
