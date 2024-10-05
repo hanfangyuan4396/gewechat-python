@@ -13,7 +13,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/hanfangyuan4396/gewechat-python",
     license='Apache-2.0',
-    packages=['gewechat_client'],
+    packages=['gewechat_client', 'gewechat_client.api', 'gewechat_client.util'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",
