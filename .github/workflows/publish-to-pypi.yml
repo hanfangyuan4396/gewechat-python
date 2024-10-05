@@ -1,18 +1,21 @@
-name: Publish Python  distributions  to PyPI
+name: Publish Python  distributions to PyPI
 
 on:
-  push:
-    tags:
-      - 'v*'  # Push events to matching v*, i.e. v1.0, v20.15.10
+  release:
+    types: [published]
+
+env:
+  WECOM_WEBHOOK_URL: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${{ secrets.WECOM_WEBHOOK_KEY }}
+
 
 jobs:
   build-n-publish:
-    name: Build and publish Python  distributions  to PyPI
+    name: Build and publish Python  distributions to PyPI
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: '3.x'
     - name: Install dependencies
@@ -26,3 +29,43 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Notify success
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const webhookUrl = "${{ env.HFY_WECOM_WEBHOOK_URL }}";
+            const messageContent = "${{ github.repository }}" + "发布成功！";
+            const message = {
+              msgtype: "text",
+              text: {
+                content: messageContent
+              }
+            };
+            await github.request("POST " + webhookUrl, {
+              data: message,
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+
+     - name: Notify failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const webhookUrl = "${{ env.WECOM_WEBHOOK_URL }}";
+            const messageContent = "${{ github.repository }}" + "发布失败！";
+            const message = {
+              msgtype: "text",
+              text: {
+                content: messageContent
+              }
+            };
+            await github.request("POST " + webhookUrl, {
+              data: message,
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
