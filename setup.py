@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="gewechat-client",
-    version="0.1.0",
+    version="0.1.1",
     author="hanfangyuan",
     author_email="i@hanfangyuan.cn",
     description="A package for interacting with the Gewechat API",
