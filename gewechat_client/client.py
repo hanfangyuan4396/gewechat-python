@@ -1,13 +1,12 @@
-from gewechat_client.api.contact_api import ContactApi
-from gewechat_client.api.download_api import DownloadApi
-from gewechat_client.api.download_api import DownloadApi
-from gewechat_client.api.favor_api import FavorApi
-from gewechat_client.api.group_api import GroupApi
-from gewechat_client.api.label_api import LabelApi
-from gewechat_client.api.login_api import LoginApi
-from gewechat_client.api.message_api import MessageApi
-from gewechat_client.api.personal_api import PersonalApi
-
+from .api.contact_api import ContactApi
+from .api.download_api import DownloadApi
+from .api.download_api import DownloadApi
+from .api.favor_api import FavorApi
+from .api.group_api import GroupApi
+from .api.label_api import LabelApi
+from .api.login_api import LoginApi
+from .api.message_api import MessageApi
+from .api.personal_api import PersonalApi
 
 class GewechatClient:
     """
