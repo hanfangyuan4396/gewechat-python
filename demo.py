@@ -10,6 +10,8 @@ def main():
 
     # 创建 GewechatClient 实例
     client = GewechatClient(base_url, token)
+
+    # 登录, 自动创建二维码，扫码后自动登录
     is_login_success = client.login(app_id=app_id)
     if not is_login_success:
         print("登录失败")
