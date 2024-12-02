@@ -95,7 +95,9 @@ class LoginApi:
             app_id: 可选的应用ID，为空时会自动创建新的app_id
             
         Returns:
-            bool: 登录是否成功
+            tuple: (app_id: str, error_msg: str) 
+                   成功时 error_msg 为空字符串
+                   失败时 app_id 可能为空字符串，error_msg 包含错误信息
         """
         # 1. 检查是否已经登录
         input_app_id = app_id
@@ -103,17 +105,21 @@ class LoginApi:
             check_online_response = self.check_online(input_app_id)
             if check_online_response.get('ret') == 200 and check_online_response.get('data'):
                 print_green(f"AppID: {input_app_id} 已在线，无需登录")
-                return True
+                return input_app_id, ""
             else:
                 print_yellow(f"AppID: {input_app_id} 未在线，执行登录流程")
+
         # 2. 获取初始二维码
         app_id, uuid = self._get_and_validate_qr(app_id)
         if not app_id or not uuid:
-            return False
+            return "", "获取二维码失败"
+
         if not input_app_id:
             print_green(f"AppID: {app_id}, 请保存此app_id，下次登录时继续使用!")
             print_yellow("\n新设备登录平台，次日凌晨会掉线一次，重新登录时需使用原来的app_id取码，否则新app_id仍然会掉线，登录成功后则可以长期在线")
+
         make_and_print_qr(f"http://weixin.qq.com/x/{uuid}")
+
         # 3. 轮询检查登录状态
         retry_count = 0
         max_retries = 100  # 最大重试100次
@@ -122,17 +128,18 @@ class LoginApi:
             login_status = self.check_qr(app_id, uuid, "")
             if login_status.get('ret') != 200:
                 print_red(f"检查登录状态失败: {login_status}")
-                return False
+                return app_id, f"检查登录状态失败: {login_status}"
 
             login_data = login_status.get('data', {})
             status = login_data.get('status')
             expired_time = login_data.get('expiredTime', 0)
+            
             # 检查二维码是否过期，提前5秒重新获取
             if expired_time <= 5:
                 print_yellow("二维码即将过期，正在重新获取...")
                 _, uuid = self._get_and_validate_qr(app_id)
                 if not uuid:
-                    return False
+                    return app_id, "重新获取二维码失败"
 
                 make_and_print_qr(f"http://weixin.qq.com/x/{uuid}")
                 continue
@@ -140,7 +147,7 @@ class LoginApi:
             if status == 2:  # 登录成功
                 nick_name = login_data.get('nickName', '未知用户')
                 print_green(f"\n登录成功！用户昵称: {nick_name}")
-                return True
+                return app_id, ""
             else:
                 retry_count += 1
                 if retry_count >= max_retries:
