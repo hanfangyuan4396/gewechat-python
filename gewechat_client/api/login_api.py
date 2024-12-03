@@ -152,5 +152,5 @@ class LoginApi:
                 retry_count += 1
                 if retry_count >= max_retries:
                     print_yellow("登录超时，请重新尝试")
-                    return False
+                    return app_id, "登录超时，请重新尝试"
                 time.sleep(5)
