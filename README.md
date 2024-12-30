@@ -9,7 +9,14 @@ gewechat python client
 pip install gewechat-client
 ```
 
+使用`login`函数可以直接在控制台打印二维码，扫码后自动执行登录确认，详见下方使用demo代码
+
+<div align="center">
+<img width="700" src="./docs/images/gewechat_login.jpg">
+</div>
+
 使用demo
+
 ```python
 from gewechat_client import GewechatClient
 import os
