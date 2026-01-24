@@ -3,3 +3,5 @@ __pycache__/
 actions/
 output.txt
 reference-code
+
+.env

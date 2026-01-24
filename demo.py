@@ -1,21 +1,29 @@
 from gewechat_client import GewechatClient
 import os
+from dotenv import load_dotenv
 
 def main():
+    load_dotenv()
     # 配置参数
-    base_url = os.environ.get("BASE_URL", "http://127.0.0.1:2531/v2/api")
-    token = os.environ.get("GEWECHAT_TOKE", "xxx")
-    app_id = os.environ.get("APP_ID", "xxx")
-    send_msg_nickname = "张伟" # 要发送消息的好友昵称
+    base_url = os.environ.get("BASE_URL", "")
+    token = os.environ.get("GEWECHAT_TOKE", "")
+    app_id = os.environ.get("APP_ID", "")
+    region_id = os.environ.get("REGION_ID", "")
+    send_msg_nickname = "张三" # 要发送消息的好友昵称
 
     # 创建 GewechatClient 实例
     client = GewechatClient(base_url, token)
 
     # 登录, 自动创建二维码，扫码后自动登录
-    app_id, error_msg = client.login(app_id=app_id)
+    app_id, error_msg, login_info = client.login(
+        app_id=app_id,
+        region_id=region_id,
+    )
     if error_msg:
         print("登录失败")
         return
+    if login_info:
+        print("登录信息:", login_info)
     try:
 
         # 获取好友列表

@@ -244,9 +244,9 @@ class GewechatClient:
         return self._personal_api.update_head_img(app_id, head_img_url)
 
     # Login API methods
-    def login(self, app_id):
+    def login(self, app_id, region_id, login_type="ipad", proxy_ip="", ttuid="", aid="", auto_sliding=False):
         """登录"""
-        return self._login_api.login(app_id)
+        return self._login_api.login(app_id, region_id, login_type, proxy_ip, ttuid, aid, auto_sliding)
 
     def get_token(self):
         """获取tokenId"""
@@ -256,13 +256,13 @@ class GewechatClient:
         """设置微信消息的回调地址"""
         return self._login_api.set_callback(token, callback_url)
 
-    def get_qr(self, app_id):
+    def get_qr(self, app_id, region_id, login_type="ipad", proxy_ip="", ttuid="", aid=""):
         """获取登录二维码"""
-        return self._login_api.get_qr(app_id)
+        return self._login_api.get_qr(app_id, region_id, login_type, proxy_ip, ttuid, aid)
 
-    def check_qr(self, app_id, uuid, captch_code):
+    def check_qr(self, app_id, uuid, auto_sliding=False, proxy_ip="", captch_code=""):
         """确认登陆"""
-        return self._login_api.check_qr(app_id, uuid, captch_code)
+        return self._login_api.check_qr(app_id, uuid, auto_sliding, proxy_ip, captch_code)
 
     def log_out(self, app_id):
         """退出微信"""
